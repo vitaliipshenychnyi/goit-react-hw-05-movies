@@ -12,11 +12,21 @@ const options = {
   },
 };
 
+// функція отримання переліку топових фільмів на день
 export const getMovies = async () => {
   const response = await axios.get(
     `${BASE_URL}trending/movie/day?language=en-US`,
     options
   );
-  console.log(response.data.results);
-  return response.data.results;
+  return response.data;
+};
+
+// функція отримання детальної інформації по обраному фільму
+export const getDetailMovie = async movie_id => {
+  const response = await axios.get(
+    `${BASE_URL}movie/${movie_id}?language=en-US`,
+    options
+  );
+  console.log(response.data);
+  return response.data;
 };
