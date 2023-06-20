@@ -48,6 +48,7 @@ export const getReviews = async movie_id => {
   return response.data;
 };
 
+// ****************************************************************
 // функція пошуку фільма за назвою
 export const getFilm = async filmName => {
   const response = await axios.get(
@@ -57,3 +58,4 @@ export const getFilm = async filmName => {
   console.log(response.data);
   return response.data;
 };
+// ****************************************************************

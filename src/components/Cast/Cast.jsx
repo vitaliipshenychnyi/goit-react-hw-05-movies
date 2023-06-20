@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getCast } from 'api/fetchFilm';
+import { CastList } from './Cast.styled';
 
 const Cast = () => {
   const { id } = useParams();
@@ -19,7 +20,7 @@ const Cast = () => {
   }, [id]);
 
   return (
-    <ul>
+    <CastList>
       {casts.map(cast => (
         <li key={cast.id}>
           <img src="" alt={cast.name} />
@@ -27,7 +28,7 @@ const Cast = () => {
           <p>Character: {cast.character}</p>
         </li>
       ))}
-    </ul>
+    </CastList>
   );
 };
 

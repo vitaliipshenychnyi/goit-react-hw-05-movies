@@ -7,7 +7,7 @@ export const Container = styled.section`
 
 export const Title = styled.h1`
   margin-bottom: 20px;
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 700;
   color: black;
 `;
