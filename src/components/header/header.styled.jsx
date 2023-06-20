@@ -7,11 +7,16 @@ export const HeaderWrapper = styled.header`
 `;
 
 export const Nav = styled.nav`
-  display: flex;
-  gap: 16px;
   background-color: #edf3fb;
+  ul {
+    display: flex;
+    gap: 16px;
+  }
 `;
 
-export const Link = styled(NavLink)`
+export const StyledLink = styled(NavLink)`
   text-decoration: none;
+  &.active {
+    color: orange;
+  }
 `;

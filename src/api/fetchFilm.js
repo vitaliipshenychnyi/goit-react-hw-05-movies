@@ -27,6 +27,33 @@ export const getDetailMovie = async movie_id => {
     `${BASE_URL}movie/${movie_id}?language=en-US`,
     options
   );
+  return response.data;
+};
+
+// функція отримання детальної інформації про акторський склад для сторінки кінофільму
+export const getCast = async movie_id => {
+  const response = await axios.get(
+    `${BASE_URL}movie/${movie_id}/credits?language=en-US`,
+    options
+  );
+  return response.data;
+};
+
+// функція запиту оглядів для сторінки кінофільму
+export const getReviews = async movie_id => {
+  const response = await axios.get(
+    `${BASE_URL}movie/${movie_id}/reviews?language=en-US`,
+    options
+  );
+  return response.data;
+};
+
+// функція пошуку фільма за назвою
+export const getFilm = async filmName => {
+  const response = await axios.get(
+    `${BASE_URL}search/${filmName}?include_adult=false&language=en-US&page=1`,
+    options
+  );
   console.log(response.data);
   return response.data;
 };

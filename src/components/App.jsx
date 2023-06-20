@@ -1,35 +1,45 @@
 // import { Route, Routes } from 'react-router-dom';
-import { FilmList } from './FilmList/FilmList';
-import { getMovies } from 'api/fetchFilm';
-import { useEffect, useState } from 'react';
-import { Header } from './header/header';
 
-export const App = () => {
-  const [films, setFilms] = useState([]);
+// import Layout from './Layout';
+// import Home from 'pages/home';
+// import Movies from 'pages/movies';
+// import FilmDetails from './FilmDetails/FilmDetails';
 
-  useEffect(() => {
-    const fetchFilms = async () => {
-      try {
-        const data = await getMovies();
-        const films = data.results;
-        setFilms(films);
-        console.log(films);
-      } catch (error) {}
-    };
+// const App = () => {
+//   return (
+//     <Routes>
+//       <Route path="/" element={<Layout />}>
+//         <Route index element={<Home />} />
+//         <Route path="movies" element={<Movies />} />
+//         <Route path=":id" element={<FilmDetails />} />
+//       </Route>
+//     </Routes>
+//   );
+// };
 
-    fetchFilms();
-  }, []);
+// export default App;
 
+import Home from 'pages/home';
+import Movies from 'pages/movies';
+import { Route, Routes } from 'react-router-dom';
+import FilmDetails from './FilmDetails/FilmDetails';
+import Layout from './Layout';
+import Cast from './Cast/Cast';
+import Reviews from './Reviews/reviews';
+
+const App = () => {
   return (
-    <div>
-      <Header />
-      <FilmList films={films} />
-
-      {/* <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes> */}
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="movies" element={<Movies />} />
+        <Route path="movies/:id" element={<FilmDetails />}>
+          <Route path="cast" element={<Cast />} />
+          <Route path="reviews" element={<Reviews />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 };
+
+export default App;
