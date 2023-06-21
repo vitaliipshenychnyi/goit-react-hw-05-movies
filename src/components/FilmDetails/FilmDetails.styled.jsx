@@ -9,8 +9,9 @@ export const WrapperMain = styled.div`
   display: flex;
   gap: 20px;
   border-bottom: 3px solid grey;
+  padding: 10px 0;
   img {
-    outline: 1px solid red;
+    width: 250px;
   }
 `;
 

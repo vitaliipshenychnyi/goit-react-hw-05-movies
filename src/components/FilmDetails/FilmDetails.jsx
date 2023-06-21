@@ -21,6 +21,7 @@ const FilmDetails = () => {
   const [film, setFilms] = useState([]);
   const [genres, setGenres] = useState([]);
   const [date, setDate] = useState('');
+  const [urlImg, setUrlImg] = useState('');
 
   useEffect(() => {
     const fetchFilms = async () => {
@@ -28,11 +29,12 @@ const FilmDetails = () => {
         const film = await getDetailMovie(id);
         const genres = film.genres; // отримання жанру
         const date = film.release_date.split('-')[0]; // отримання дати виходу
-        console.log(film);
+        const url = `https://image.tmdb.org/t/p/w500${film.poster_path}`;
 
         setGenres(genres);
         setFilms(film);
         setDate(date);
+        setUrlImg(url);
       } catch (error) {}
     };
 
@@ -45,7 +47,7 @@ const FilmDetails = () => {
     <Container>
       <NavLink to={backLinkRef.current}>Back</NavLink>
       <WrapperMain>
-        <img src={film.poster_path} alt={title} />
+        <img src={urlImg} alt={title} />
         <div>
           <Title>
             {title} <span> ({date})</span>

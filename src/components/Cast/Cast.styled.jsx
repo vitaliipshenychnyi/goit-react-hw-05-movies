@@ -11,6 +11,9 @@ export const CastList = styled.ul`
     padding: 10px;
     border-radius: 5px;
     background-color: #edf3fb;
-    width: 250px;
+    width: 150px;
+  }
+  img {
+    width: 100%;
   }
 `;

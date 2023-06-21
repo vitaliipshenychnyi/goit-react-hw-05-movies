@@ -12,6 +12,7 @@ const Cast = () => {
       try {
         const data = await getCast(id);
         const casts = data.cast;
+        console.log(casts);
         setCasts(casts);
       } catch (error) {}
     };
@@ -23,7 +24,10 @@ const Cast = () => {
     <CastList>
       {casts.map(cast => (
         <li key={cast.id}>
-          <img src="" alt={cast.name} />
+          <img
+            src={`https://image.tmdb.org/t/p/w500${cast.profile_path}`} //!!!!!!!!!!!!!!!!!!!!!!
+            alt={cast.name}
+          />
           <p>Name: {cast.name}</p>
           <p>Character: {cast.character}</p>
         </li>
