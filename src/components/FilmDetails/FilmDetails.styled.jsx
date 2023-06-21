@@ -54,7 +54,7 @@ export const ListOfAdditional = styled.ul`
 `;
 
 export const WrapperAdditional = styled.div`
-padding: 10px 0;
+  padding: 10px 0;
   border-bottom: 3px solid grey;
   img {
     outline: 1px solid red;

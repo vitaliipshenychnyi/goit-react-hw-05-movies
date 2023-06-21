@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getMovies } from 'api/fetchFilm';
 import { Title, Container, ListOfFilm } from './FilmList.stylaed';
 
 const FilmList = () => {
   const [films, setFilms] = useState([]);
+  const location = useLocation(); //для отримання шляху з якого переходимо для передачи через props
 
   useEffect(() => {
     const fetchFilms = async () => {
@@ -25,7 +26,9 @@ const FilmList = () => {
       <ListOfFilm>
         {films.map(film => (
           <li key={film.id}>
-            <Link to={`movies/${film.id}`}>{film.title}</Link>
+            <Link to={`movies/${film.id}`} state={{ from: location }}>
+              {film.title}
+            </Link>
           </li>
         ))}
       </ListOfFilm>

@@ -1,5 +1,5 @@
-import { Outlet, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { NavLink, Outlet, useParams, useLocation } from 'react-router-dom';
+import { useEffect, useState, Suspense, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { getDetailMovie } from 'api/fetchFilm';
 import {
@@ -16,7 +16,8 @@ import {
 
 const FilmDetails = () => {
   const { id } = useParams();
-
+  const location = useLocation(); //для отримання шляху з якого прийшли
+  const backLinkRef = useRef(location.state?.from ?? '/'); //для зберігання шляху з якого прийшли
   const [film, setFilms] = useState([]);
   const [genres, setGenres] = useState([]);
   const [date, setDate] = useState('');
@@ -42,6 +43,7 @@ const FilmDetails = () => {
 
   return (
     <Container>
+      <NavLink to={backLinkRef.current}>Back</NavLink>
       <WrapperMain>
         <img src={film.poster_path} alt={title} />
         <div>
@@ -66,7 +68,9 @@ const FilmDetails = () => {
           </li>
         </ListOfAdditional>
       </WrapperAdditional>
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </Container>
   );
 };

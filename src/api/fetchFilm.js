@@ -48,14 +48,11 @@ export const getReviews = async movie_id => {
   return response.data;
 };
 
-// ****************************************************************
 // функція пошуку фільма за назвою
 export const getFilm = async filmName => {
   const response = await axios.get(
-    `${BASE_URL}search/${filmName}?include_adult=false&language=en-US&page=1`,
+    `${BASE_URL}search/movie?query=${filmName}&include_adult=false&language=en-US&page=1`,
     options
   );
-  console.log(response.data);
   return response.data;
 };
-// ****************************************************************
