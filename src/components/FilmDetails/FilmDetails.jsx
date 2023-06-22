@@ -14,6 +14,9 @@ import {
   WrapperMain,
 } from './FilmDetails.styled';
 
+// зображення користувача за замовчуванням
+import defaultPicture from '../Cast/avatar-picture.png';
+
 const FilmDetails = () => {
   const { id } = useParams();
   const location = useLocation(); //для отримання шляху з якого прийшли
@@ -31,9 +34,11 @@ const FilmDetails = () => {
         const film = await getDetailMovie(id);
         const genres = film.genres; // отримання жанру
         const date = film.release_date.split('-')[0]; // отримання дати виходу
-        const url = `https://image.tmdb.org/t/p/w500${film.poster_path}`;
+        const url = film.poster_path
+          ? `https://image.tmdb.org/t/p/w500${film.poster_path}`
+          : defaultPicture;
 
-        if (film===[]) {
+        if (film === []) {
           setError(`Інформація по фільму відсутня`);
           setStatus('rejected');
         } else {

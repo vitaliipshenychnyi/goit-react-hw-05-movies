@@ -10,15 +10,23 @@ const Cast = () => {
   const { id } = useParams();
   const [casts, setCasts] = useState([]);
   const [error, setError] = useState(null);
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     const fetchCast = async () => {
       try {
         const data = await getCast(id);
         const casts = data.cast;
+
+        if (!casts.length) {
+          setError(`Перелік акторів відсутній :(`);
+          setStatus('rejected');
+        }
+
         setCasts(casts);
       } catch (error) {
         setError(error.message);
+        setStatus('rejected');
       }
     };
 
@@ -27,7 +35,7 @@ const Cast = () => {
 
   return (
     <CastList>
-      {error && <p>Вибачте, але щось пішло не так :(</p>}
+      {status === 'rejected' && <p>{error}</p>}
 
       {casts.map(cast => {
         if (cast.profile_path) {

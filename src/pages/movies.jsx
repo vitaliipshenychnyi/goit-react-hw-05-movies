@@ -27,6 +27,7 @@ const Movies = () => {
     try {
       const date = await getFilm(filmName);
       const films = date.results;
+      
       if (!films.length) {
         setError(`Фільми зі словом ${filmName} не знайдені`);
         setFilms([]);

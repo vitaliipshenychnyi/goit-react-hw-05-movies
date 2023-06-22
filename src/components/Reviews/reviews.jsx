@@ -7,15 +7,23 @@ const Reviews = () => {
   const { id } = useParams();
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const data = await getReviews(id);
         const reviews = data.results;
+
+        if (!reviews.length) {
+          setError(`Відгуки відсутні :(`);
+          setStatus('rejected');
+        }
+
         setReviews(reviews);
       } catch (error) {
         setError(error.message);
+        setStatus('rejected');
       }
     };
 
@@ -24,7 +32,7 @@ const Reviews = () => {
 
   return (
     <ReviewsList>
-      {error && <p>Вибачте, але щось пішло не так :(</p>}
+      {status === 'rejected' && <p>{error}</p>}
 
       {reviews.map(review => (
         <li key={review.id}>
