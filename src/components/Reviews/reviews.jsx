@@ -6,6 +6,7 @@ import { ReviewsList } from './reviews.styled';
 const Reviews = () => {
   const { id } = useParams();
   const [reviews, setReviews] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -13,7 +14,9 @@ const Reviews = () => {
         const data = await getReviews(id);
         const reviews = data.results;
         setReviews(reviews);
-      } catch (error) {}
+      } catch (error) {
+        setError(error.message);
+      }
     };
 
     fetchReviews();
@@ -21,6 +24,8 @@ const Reviews = () => {
 
   return (
     <ReviewsList>
+      {error && <p>Вибачте, але щось пішло не так :(</p>}
+
       {reviews.map(review => (
         <li key={review.id}>
           <p>Author: {review.author}</p>

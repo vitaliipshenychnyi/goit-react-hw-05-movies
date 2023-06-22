@@ -18,6 +18,8 @@ const ListOfFilm = styled.ul`
 const Movies = () => {
   const [searchFilm, setSearchFilm] = useSearchParams();
   const [films, setFilms] = useState([]);
+  const [error, setError] = useState(null);
+  const [status, setStatus] = useState('');
   const location = useLocation();
   const filmName = searchFilm.get('filmName') ?? '';
 
@@ -25,8 +27,17 @@ const Movies = () => {
     try {
       const date = await getFilm(filmName);
       const films = date.results;
-      setFilms(films);
-    } catch (error) {}
+      if (!films.length) {
+        setError(`Фільми зі словом ${filmName} не знайдені`);
+        setFilms([]);
+        setStatus('rejected');
+      } else {
+        setFilms(films);
+        setError(null);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const updateSearch = event => {
@@ -41,6 +52,9 @@ const Movies = () => {
     <div>
       <input type="text" value={filmName} onChange={updateSearch} />
       <button onClick={fetchFilm}>Search</button>
+
+      {status === 'rejected' && <p>{error}</p>}
+
       <ListOfFilm>
         {films.map(film => (
           <li key={film.id}>

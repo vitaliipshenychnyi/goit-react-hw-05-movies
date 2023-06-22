@@ -5,6 +5,7 @@ import { Title, Container, ListOfFilm } from './FilmList.stylaed';
 
 const FilmList = () => {
   const [films, setFilms] = useState([]);
+  const [error, setError] = useState(null);
   const location = useLocation(); //для отримання шляху з якого переходимо для передачи через props
 
   useEffect(() => {
@@ -13,8 +14,9 @@ const FilmList = () => {
         const data = await getMovies();
         const films = data.results;
         setFilms(films);
-        // console.log(films);
-      } catch (error) {}
+      } catch (error) {
+        setError(error.message);
+      }
     };
 
     fetchFilms();
@@ -23,6 +25,9 @@ const FilmList = () => {
   return (
     <Container>
       <Title>Trending today</Title>
+
+      {error && <p>Вибачте, але щось пішло не так :(</p>}
+
       <ListOfFilm>
         {films.map(film => (
           <li key={film.id}>
