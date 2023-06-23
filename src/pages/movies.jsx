@@ -1,5 +1,5 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getFilm } from 'api/fetchFilm';
 import { Link } from 'react-router-dom';
@@ -20,14 +20,14 @@ const Movies = () => {
   const [films, setFilms] = useState([]);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('');
-  const location = useLocation();
+  const location = useLocation(); //для отримання шляху з якого переходимо для передачи через props
   const filmName = searchFilm.get('filmName') ?? '';
 
   const fetchFilm = async () => {
     try {
       const date = await getFilm(filmName);
       const films = date.results;
-      
+
       if (!films.length) {
         setError(`Фільми зі словом ${filmName} не знайдені`);
         setFilms([]);
@@ -41,6 +41,8 @@ const Movies = () => {
     }
   };
 
+  useEffect(() => fetchFilm,[]);
+  
   const updateSearch = event => {
     const filmNameValue = event.target.value;
     if (filmNameValue === '') {
