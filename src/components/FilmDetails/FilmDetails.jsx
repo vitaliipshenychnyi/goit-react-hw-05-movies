@@ -27,7 +27,7 @@ const FilmDetails = () => {
   const [urlImg, setUrlImg] = useState('');
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('idle');
-  
+
   useEffect(() => {
     const fetchFilms = async () => {
       try {

@@ -15,6 +15,30 @@ const ListOfFilm = styled.ul`
   }
 `;
 
+const InputWrapper = styled.form`
+  box-shadow: 0px 10px 10px rgba(46, 47, 66, 0.08),
+    0px 1px 1px rgba(46, 47, 66, 0.16), 0px 2px 1px rgba(46, 47, 66, 0.08);
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #edf3fb;
+  input {
+    outline: none;
+  }
+  label {
+    color: grey;
+  }
+`;
+
+const Container = styled.section`
+  padding: 20px;
+  background-color: #fff;
+`;
+
+const ErrorText = styled.p`
+  margin-top: 20px;
+  color: red;
+`;
+
 const Movies = () => {
   const [searchFilm, setSearchFilm] = useSearchParams();
   const [films, setFilms] = useState([]);
@@ -23,26 +47,28 @@ const Movies = () => {
   const location = useLocation(); //для отримання шляху з якого переходимо для передачи через props
   const filmName = searchFilm.get('filmName') ?? '';
 
-  const fetchFilm = async () => {
-    try {
-      const date = await getFilm(filmName);
-      const films = date.results;
+  useEffect(() => {
+    const fetchFilm = async () => {
+      try {
+        const date = await getFilm(filmName);
+        const films = date.results;
 
-      if (!films.length) {
-        setError(`Фільми зі словом ${filmName} не знайдені`);
-        setFilms([]);
-        setStatus('rejected');
-      } else {
-        setFilms(films);
-        setError(null);
+        if (!films.length && filmName !== '') {
+          setError(`Фільми зі словом ${filmName} не знайдені`);
+          setFilms([]);
+          setStatus('rejected');
+        } else {
+          setFilms(films);
+          setError(null);
+        }
+      } catch (error) {
+        setError(error.message);
       }
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+    };
 
-  useEffect(() => fetchFilm,[]);
-  
+    fetchFilm();
+  });
+
   const updateSearch = event => {
     const filmNameValue = event.target.value;
     if (filmNameValue === '') {
@@ -52,11 +78,13 @@ const Movies = () => {
   };
 
   return (
-    <div>
-      <input type="text" value={filmName} onChange={updateSearch} />
-      <button onClick={fetchFilm}>Search</button>
+    <Container>
+      <InputWrapper>
+        <input type="text" value={filmName} onChange={updateSearch} />
+        <label> Пошук фільму за ключовим словом</label>
+      </InputWrapper>
 
-      {status === 'rejected' && <p>{error}</p>}
+      {status === 'rejected' && <ErrorText>{error}</ErrorText>}
 
       <ListOfFilm>
         {films.map(film => (
@@ -67,7 +95,7 @@ const Movies = () => {
           </li>
         ))}
       </ListOfFilm>
-    </div>
+    </Container>
   );
 };
 
